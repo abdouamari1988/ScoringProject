@@ -7,32 +7,26 @@ import fr.bforbank.service.GameService;
 public class GameServiceImpl implements GameService {
 
 
-    private Game game;
-
-
     @Override
-    public void startGame(char player1Name, char player2Name) {
-        this.game = new Game(player1Name, player2Name);
-    }
-
-    @Override
-    public void winPoint(char player) {
+    public Player winPoint(char player, Game game) {
         Player player1 = game.getPlayer1();
         Player player2 = game.getPlayer2();
         if (player1 != null && player == player1.getName()) {
             player1.winPoint();
+            return player1;
         } else if (player2 != null && player == player2.getName()) {
             player2.winPoint();
+            return player2;
         } else {
             throw new IllegalArgumentException("Invalid player identifier: " + player);
         }
     }
 
     @Override
-    public String getScore() {
+    public String getScore(Game game) {
         Player player1 = game.getPlayer1();
         Player player2 = game.getPlayer2();
-        Player player = winGame();
+        Player player = winGame(game);
         if (player != null) {
             return "Player " + player.getName() + " wins the game";
         } else if (player1 != null && player2 != null) {
@@ -55,9 +49,9 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public Player winGame() {
-        Player player1 = this.game.getPlayer1();
-        Player player2 = this.game.getPlayer2();
+    public Player winGame(Game game) {
+        Player player1 = game.getPlayer1();
+        Player player2 = game.getPlayer2();
         if (player1 != null && player2 != null) {
             int score1 = player1.getScore();
             int score2 = player2.getScore();

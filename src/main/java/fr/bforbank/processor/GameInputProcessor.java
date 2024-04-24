@@ -1,5 +1,6 @@
 package fr.bforbank.processor;
 
+import fr.bforbank.domain.Game;
 import fr.bforbank.service.GameService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -17,7 +18,7 @@ public class GameInputProcessor {
         this.gameService = gameService;
     }
 
-    public void processGameFromFile(String filePath) throws IOException {
+    public void processGameFromFile(Game game,String filePath) throws IOException {
 
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         try (InputStream inputStream = classLoader.getResourceAsStream(filePath)) {
@@ -26,13 +27,13 @@ public class GameInputProcessor {
                 int character;
                 while ((character = reader.read()) != -1) {
                     char player = (char) character;
-                    processPoint(player);
+                    processPoint(player,game);
                 }
             }
         }
     }
 
-    private void processPoint(char player) {
-            gameService.winPoint(player);
+    private void processPoint(char player, Game game) {
+            gameService.winPoint(player,game);
     }
 }

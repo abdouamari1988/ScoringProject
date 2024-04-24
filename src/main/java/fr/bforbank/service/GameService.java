@@ -1,13 +1,14 @@
 package fr.bforbank.service;
 
+import fr.bforbank.domain.Game;
 import fr.bforbank.domain.Player;
 
 public interface GameService {
-    void startGame(char player1Name, char player2Name);
 
-    void winPoint(char player);
 
-    String getScore();
+    Player winPoint(char player, Game game);
 
-    Player winGame();
+    String getScore(Game game);
+
+    Player winGame(Game game);
 }
